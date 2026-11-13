@@ -1,0 +1,30 @@
+<dialog #dialog aria-labelledby="popup-title" (close)="closed.emit()" (click)="onBackdropClick($event)">
+  @let r = restaurant();
+
+  <header>
+    <h2 id="popup-title">{{ r.name }}</h2>
+    <button type="button" class="close" aria-label="Fermer" (click)="close()">×</button>
+  </header>
+
+  <dl>
+    <dt>Adresse</dt>
+    <dd>{{ r.address ?? 'Non renseignée' }}</dd>
+
+    <dt>Horaires</dt>
+    <dd>{{ r.openingHours ?? 'Non renseignés' }}</dd>
+
+    @if (r.phone) {
+      <dt>Téléphone</dt>
+      <dd><a [href]="'tel:' + r.phone">{{ r.phone }}</a></dd>
+    }
+
+    @if (r.website) {
+      <dt>Site web</dt>
+      <dd><a [href]="r.website" target="_blank" rel="noopener">{{ r.website }}</a></dd>
+    }
+  </dl>
+
+  <footer>
+    <button type="button" class="choose" (click)="choose()">Choisir</button>
+  </footer>
+</dialog>

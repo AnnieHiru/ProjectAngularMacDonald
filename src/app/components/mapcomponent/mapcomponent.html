@@ -1,0 +1,95 @@
+<form class="search" role="search" aria-labelledby="search-title" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 id="search-title" class="search-title">Rechercher un restaurant</h2>
+
+  <div class="search-field">
+    <input
+      type="search"
+      placeholder="Rechercher une ville…"
+      aria-label="Rechercher une ville"
+      autocomplete="off"
+      formControlName="search"
+      (focus)="showSuggestions.set(true)"
+    />
+    <button type="submit" class="search-button" aria-label="Rechercher" [disabled]="searching()">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2" />
+        <line x1="15.5" y1="15.5" x2="21" y2="21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  @if (form.controls.search.dirty && form.controls.search.invalid) {
+    <p class="hint">Saisissez au moins {{ minQueryLength }} caractères.</p>
+  } @else if (notFound()) {
+    <p class="hint">Aucune ville trouvée pour « {{ form.controls.search.value }} ».</p>
+  }
+
+  @if (showSuggestions() && cities().length > 0) {
+    <ul class="suggestions">
+      @for (city of cities(); track city.id) {
+        <li>
+          <button type="button" (click)="selectCity(city)">
+            <strong>{{ city.name }}</strong>
+            <span>{{ city.displayName }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</form>
+
+@if (selectedCity(); as city) {
+  <p class="status">
+    @if (loading()) {
+      Recherche des McDonald's autour de {{ city.name }}…
+    } @else {
+      {{ restaurants().length }} McDonald's trouvé(s) à moins de {{ radiusKm }} km de {{ city.name }}
+    }
+  </p>
+}
+
+
+
+<div class="map-container" leaflet [leafletOptions]="options" [leafletLayers]="markers()" (leafletMapReady)="onMapReady($event)"></div>
+
+<!--@if (restaurants().length > 0) {
+  <ul class="restaurants">
+    @for (r of restaurants(); track r.id) {
+      <li [class.chosen]="r.id === chosenRestaurant()?.id">
+        <button type="button" [attr.aria-current]="r.id === chosenRestaurant()?.id || null" (click)="openRestaurant(r)">
+          <strong>{{ r.name }}</strong>
+          @if (r.address) {
+            <span>{{ r.address }}</span>
+          }
+        </button>
+      </li>
+    }
+  </ul>
+} -->
+
+@if (chosenRestaurant(); as chosen) {
+  <p class="chosen-banner" role="status">
+    ✔<strong>Restaurant séléctionné </strong>
+    <p><strong>{{ chosen.name }}</strong></p>
+    @if (chosen.address) {
+     {{ chosen.address }}
+    }
+    <p><button type="button" class="button-continue" >Continuer</button></p>
+  
+}
+@else {
+   <p class="chosen-banner" role="status">
+     Aucun restaurant séléctionné 
+  </p>
+}
+
+
+@if (selectedRestaurant(); as r) {
+  <app-popup-component
+    [restaurant]="r"
+    (chosen)="chosenRestaurant.set($event)"
+    (closed)="selectedRestaurant.set(null)"
+  />
+}
+
+

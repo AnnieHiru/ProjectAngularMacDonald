@@ -1,0 +1,2 @@
+ source "$HOME/.nvm/nvm.sh" && nvm use 20
+ source "$HOME/.nvm/nvm.sh" && nvm current && node -v && npm -v

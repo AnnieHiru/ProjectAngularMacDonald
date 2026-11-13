@@ -1,0 +1,12 @@
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.map-placeholder {
+  height: 500px;
+  display: grid;
+  place-items: center;
+  background: #eee;
+}
