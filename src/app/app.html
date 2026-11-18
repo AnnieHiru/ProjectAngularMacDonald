@@ -1,6 +1,4 @@
 <main class="main">
-  <h1>Hello, {{ title() }}</h1>
-
   @if (mapComponent(); as map) {
     <ng-container *ngComponentOutlet="map" />
   } @else {

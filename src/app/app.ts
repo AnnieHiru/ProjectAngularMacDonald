@@ -9,7 +9,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('mac_donald');
   protected readonly mapComponent = signal<Type<unknown> | null>(null);
 
   constructor() {

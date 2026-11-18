@@ -56,17 +56,6 @@ footer {
   margin-top: 1rem;
 }
 
-.choose {
-  padding: 0.5rem 1.25rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #000000;
-  background: #eff14d;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
 /*.choose:hover {
   background: #b71f15;
 }*/

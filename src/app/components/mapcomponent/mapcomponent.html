@@ -10,7 +10,7 @@
       formControlName="search"
       (focus)="showSuggestions.set(true)"
     />
-    <button type="submit" class="search-button" aria-label="Rechercher" [disabled]="searching()">
+    <button type="submit" class="search-button primary-button" aria-label="Rechercher" [disabled]="searching()">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
         <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2" />
         <line x1="15.5" y1="15.5" x2="21" y2="21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
@@ -68,19 +68,17 @@
 } -->
 
 @if (chosenRestaurant(); as chosen) {
-  <p class="chosen-banner" role="status">
-    ✔<strong>Restaurant séléctionné </strong>
-    <p><strong>{{ chosen.name }}</strong></p>
-    @if (chosen.address) {
-     {{ chosen.address }}
-    }
-    <p><button type="button" class="button-continue" >Continuer</button></p>
-  
-}
-@else {
-   <p class="chosen-banner" role="status">
-     Aucun restaurant séléctionné 
-  </p>
+  <article class="chosen-card" aria-label="Restaurant sélectionné">
+    <div class="chosen-card-content">
+      <span class="chosen-label">Restaurant sélectionné</span>
+      <p class="chosen-address">{{ chosen.name }}@if (chosen.address) {, {{ chosen.address }}}</p>
+    </div>
+    <button type="button" class="primary-button">Continuer</button>
+  </article>
+} @else {
+  <article class="chosen-card chosen-card-empty" role="status">
+    Aucun restaurant sélectionné
+  </article>
 }
 
 
